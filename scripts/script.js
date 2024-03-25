@@ -29,13 +29,13 @@ async function getWeather() {
     const formattedDate = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric' }).format(date);
     const dayOfWeek = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
     currentCityDisplay.innerHTML = data.name;
-    currentTempDisplay.innerHTML = `${data.main.temp}&#8457;`;
+    currentTempDisplay.innerHTML = `${Math.round(data.main.temp)}&#8457;`;
     currentWeatherDisplay.innerHTML = data.weather[0].description;
     todaysDate.innerHTML = formattedDate;
     currentDay.innerHTML = dayOfWeek;
-    maxTemp.innerHTML = `${data.main.temp_max}&#8457`;
-    minTemp.innerHTML = `${data.main.temp_min}&#8457;`;
-    feelsLikeTemp.innerHTML = `${data.main.feels_like}&#8457;`;
+    maxTemp.innerHTML = `${Math.round(data.main.temp_max)}&#8457`;
+    minTemp.innerHTML = `${Math.round(data.main.temp_min)}&#8457;`;
+    feelsLikeTemp.innerHTML = `${Math.round(data.main.feels_like)}&#8457;`;
     humidity.innerHTML = `${data.main.humidity}%`
   } catch (error) {
     console.error('Error fetching weather data:', error);
@@ -50,27 +50,27 @@ async function getForecast() {
     // Display 5-day forecast
     document.getElementById('dayOne').textContent = getDayOfWeek(data.list[1].dt);
     document.getElementById('dayOneDate').textContent = getFormattedDate(data.list[1].dt);
-    document.getElementById('dayOneTemp').innerHTML = `${data.list[1].temp.day} &#8457;`;
+    document.getElementById('dayOneTemp').innerHTML = `${Math.round(data.list[1].temp.day)} &#8457;`;
     // updateWeatherImage('dayOneImg', data.list[1].weather[0].main);
 
     document.getElementById('dayTwo').textContent = getDayOfWeek(data.list[2].dt);
     document.getElementById('dayTwoDate').textContent = getFormattedDate(data.list[2].dt);
-    document.getElementById('dayTwoTemp').innerHTML = `${data.list[2].temp.day} &#8457;`;
+    document.getElementById('dayTwoTemp').innerHTML = `${Math.round(data.list[2].temp.day)} &#8457;`;
     // updateWeatherImage('dayTwoImg', data.list[2].weather[0].main);
 
     document.getElementById('dayThree').textContent = getDayOfWeek(data.list[3].dt);
     document.getElementById('dayThreeDate').textContent = getFormattedDate(data.list[3].dt);
-    document.getElementById('dayThreeTemp').innerHTML = `${data.list[3].temp.day} &#8457;`;
+    document.getElementById('dayThreeTemp').innerHTML = `${Math.round(data.list[3].temp.day)} &#8457;`;
     // updateWeatherImage('dayThreeImg', data.list[3].weather[0].main);
 
     document.getElementById('dayFour').textContent = getDayOfWeek(data.list[4].dt);
     document.getElementById('dayFourDate').textContent = getFormattedDate(data.list[4].dt);
-    document.getElementById('dayFourTemp').innerHTML = `${data.list[4].temp.day} &#8457;`;
+    document.getElementById('dayFourTemp').innerHTML = `${Math.round(data.list[4].temp.day)} &#8457;`;
     // updateWeatherImage('dayFourImg', data.list[4].weather[0].main);
 
     document.getElementById('dayFive').textContent = getDayOfWeek(data.list[5].dt);
     document.getElementById('dayFiveDate').textContent = getFormattedDate(data.list[5].dt);
-    document.getElementById('dayFiveTemp').innerHTML = `${data.list[5].temp.day} &#8457;`;
+    document.getElementById('dayFiveTemp').innerHTML = `${Math.round(data.list[5].temp.day)} &#8457;`;
     // updateWeatherImage('dayFiveImg', data.list[5].weather[0].main);
 
   } catch (error) {

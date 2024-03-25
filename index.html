@@ -6,7 +6,9 @@
     <title id="titleTxt">Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="style/styles.css" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Risque&family=Sorts+Mill+Goudy:ital@0;1&display=swap" rel="stylesheet">
 </head>
   <body>
     
@@ -26,7 +28,7 @@
         <div class="row">
           <div class="col">
             <div class="currentCity">
-              <h1 id="currentCityDisplay">Temp City Holder</h1>
+              <h1 class="currentCityDisplay" id="currentCityDisplay">Temp City Holder</h1>
             </div>
           </div>
         </div>
@@ -37,11 +39,11 @@
             <div class="currentWeather container">
               <div class="row">
                   <div class="col-3 colStyle">
-                    <h2 id="currentDay">Today</h2>
+                    <h2 id="currentDay">Monday</h2>
                   </div>
 
                   <div class="col-6 colStyle">
-                    <h2 id="todaysDate">Monday, March 4th</h2>
+                    <h2 id="todaysDate">March 4th</h2>
                   </div>
 
                   <div class="col-3 colStyle">
@@ -52,8 +54,8 @@
               </div>
               <div class="row">
                 <div class="col currentTempDiv">
-                  <h2 id="currentTempDisplay">72</h2>
-                  <p id="currentWeatherDisplay">Sunny</p>
+                  <p id="currentTempDisplay">72</p>
+                  <h2 id="currentWeatherDisplay">Sunny</h2>
                 </div>
                 <div class="col currentTempImgDisplay colStyle">
                   <img id="currentWeatherImg" src="./imgs/sunny.png" alt="Weather Image">
@@ -99,8 +101,8 @@
           <div class="col colStyle">
             <div class="forecastDisplay">
               <div class="container py-3">
-                <h3 id="dayOne">Monday</h3>
-                <h3 id="dayOneDate">March 5th</h3>
+                <h2 id="dayOne">Monday</h2>
+                <h2 id="dayOneDate">March 5th</h2>
                 <img id="dayOneImg" src="./imgs/sunny.png" alt="Weather Image">
                 <p id="dayOneTemp">74</p>
               </div>
@@ -110,8 +112,8 @@
           <div class="col colStyle">
             <div class="forecastDisplay">
               <div class="container py-3">
-                <h3 id="dayTwo">Tuesday</h3>
-                <h3 id="dayTwoDate">March 6th</h3>
+                <h2 id="dayTwo">Tuesday</h2>
+                <h2 id="dayTwoDate">March 6th</h2>
                 <img id="dayTwoImg" src="./imgs/sunny.png" alt="Weather Image">
                 <p id="dayTwoTemp">74</p>
               </div>
@@ -120,8 +122,8 @@
           <div class="col colStyle">
             <div class="forecastDisplay">
               <div class="container py-3">
-                <h3 id="dayThree">Wednesday</h3>
-                <h3 id="dayThreeDate">March 7th</h3>
+                <h2 id="dayThree">Wednesday</h2>
+                <h2 id="dayThreeDate">March 7th</h2>
                 <img id="dayThreeImg" src="./imgs/sunny.png" alt="Weather Image">
                 <p id="dayThreeTemp">74</p>
               </div>
@@ -130,8 +132,8 @@
           <div class="col colStyle">
             <div class="forecastDisplay">
               <div class="container py-3">
-                <h3 id="dayFour">Thursday</h3>
-                <h3 id="dayFourDate">March 8th</h3>
+                <h2 id="dayFour">Thursday</h2>
+                <h2 id="dayFourDate">March 8th</h2>
                 <img id="dayFourImg" src="./imgs/sunny.png" alt="Weather Image">
                 <p id="dayFourTemp">74</p>
               </div>
@@ -140,8 +142,8 @@
           <div class="col colStyle">
             <div class="forecastDisplay">
               <div class="container py-3">
-                <h3 id="dayFive">Friday</h3>
-                <h3 id="dayFiveDate">March 9th</h3>
+                <h2 id="dayFive">Friday</h2>
+                <h2 id="dayFiveDate">March 9th</h2>
                 <img id="dayFiveImg" src="./imgs/sunny.png" alt="Weather Image">
                 <p id="dayFiveTemp">74</p>
               </div>
