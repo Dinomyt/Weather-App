@@ -95,8 +95,7 @@ function getFormattedDate(timestamp) {
 getForecast();
 // Call the function to get the current weather information
 getWeather();
-
-
+updateFavoriteButton(city);
 
 // Function to handle search button click
 document.getElementById("searchButton").addEventListener("click", function() {
@@ -108,8 +107,72 @@ document.getElementById("searchButton").addEventListener("click", function() {
     next5HoursForecast = `https://pro.openweathermap.org/data/2.5/forecast/hourly?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}&cnt=5`;
     getForecast(); // Refresh the forecast based on the new city
     getWeather(); // Refresh the weather based on the new city
+    updateFavoriteButton(city);
     
   }
+});
+
+// Function to handle saving the current city to localStorage
+function saveToLocalStorage(city) {
+  // Convert the city to lowercase
+  city = city.toLowerCase();
+
+  // Check if localStorage already contains cities
+  let savedCities = localStorage.getItem('savedCities');
+  if (!savedCities) {
+      // If localStorage is empty, initialize an empty array
+      savedCities = [];
+  } else {
+      // If localStorage contains cities, parse the JSON string to convert it back to an array
+      savedCities = JSON.parse(savedCities);
+  }
+
+  // Convert all saved cities to lowercase
+  savedCities = savedCities.map(savedCity => savedCity.toLowerCase());
+
+  // Check if the city is already present in the saved cities
+  if (!savedCities.includes(city)) {
+      // If the city is not already present, add it to the array
+      savedCities.push(city);
+      // Save the updated array back to localStorage after converting it to a JSON string
+      localStorage.setItem('savedCities', JSON.stringify(savedCities));
+      // Alert the user that the city has been saved
+      alert(`"${city}" has been added to your favorites!`);
+  } else {
+      // If the city is already present, alert the user
+      alert(`"${city}" is already in your favorites!`);
+  }
+}
+
+// Function to update the favorite button's background image and classes
+function updateFavoriteButton(city) {
+  // Convert the city to lowercase
+  city = city.toLowerCase();
+
+  // Check if the city is already favorited
+  let savedCities = localStorage.getItem('savedCities');
+  if (savedCities) {
+      // If localStorage contains cities, parse the JSON string to convert it back to an array
+      savedCities = JSON.parse(savedCities);
+      // Convert all saved cities to lowercase
+      savedCities = savedCities.map(savedCity => savedCity.toLowerCase());
+      if (savedCities.includes(city)) {
+          // If the city is favorited, add the 'favorited' class to the button and remove 'not-favorited'
+          document.querySelector('.favBtn').classList.add('favorited');
+          document.querySelector('.favBtn').classList.remove('not-favorited');
+          return; // Exit the function early
+      }
+  }
+
+  // If the city is not favorited, add the 'not-favorited' class to the button and remove 'favorited'
+  document.querySelector('.favBtn').classList.add('not-favorited');
+  document.querySelector('.favBtn').classList.remove('favorited');
+}
+
+// Add event listener to the favorite button
+document.querySelector('.favBtn').addEventListener('click', function() {
+  saveToLocalStorage(city);
+  updateFavoriteButton(city);
 });
 
 

@@ -155,7 +155,7 @@ display: none;
 
 .favBtn{
     cursor: pointer;
-    background-image: url('../imgs/heart.png'); /* Replace 'search-icon.png' with your image path */
+    background-image: url('../imgs/heart_.png'); /* Replace 'search-icon.png' with your image path */
     background-repeat: no-repeat;
     background-position: center;
     background-color: transparent; /* Set background color to transparent */
@@ -164,6 +164,14 @@ display: none;
     height: 50px; /* Set the same height as the input */
     width: 50px;
     
+}
+
+.favorited {
+    background-image: url('../imgs/heart_filled.png');
+}
+
+.not-favorited {
+    background-image: url('../imgs/heart.png');
 }
 
 .temperatureDisplay{
