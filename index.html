@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title id="titleTxt">Bootstrap demo</title>
+    <title id="titleTxt">Weather App</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="style/styles.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
   <body>
     
     <div class="main">
-      <div class="topNav">
+      <div class="container">
 
         <div class="search-container">
           <input type="text" class="search-input" id="cityInput" placeholder="Search...">
@@ -58,7 +58,7 @@
                   <h2 id="currentWeatherDisplay">Sunny</h2>
                 </div>
                 <div class="col currentTempImgDisplay colStyle">
-                  <img id="currentWeatherImg" src="./imgs/sunny.png" alt="Weather Image">
+                  <img id="currentWeatherImg" src="" alt="Weather Image">
                 </div>
               </div>
             </div>
@@ -103,7 +103,7 @@
               <div class="container py-3">
                 <h2 id="dayOne">Monday</h2>
                 <h2 id="dayOneDate">March 5th</h2>
-                <img id="dayOneImg" src="./imgs/sunny.png" alt="Weather Image">
+                <img id="dayOneImg" src="" alt="Weather Image">
                 <p id="dayOneTemp">74</p>
               </div>
 
@@ -114,7 +114,7 @@
               <div class="container py-3">
                 <h2 id="dayTwo">Tuesday</h2>
                 <h2 id="dayTwoDate">March 6th</h2>
-                <img id="dayTwoImg" src="./imgs/sunny.png" alt="Weather Image">
+                <img id="dayTwoImg" src="" alt="Weather Image">
                 <p id="dayTwoTemp">74</p>
               </div>
             </div>
@@ -124,7 +124,7 @@
               <div class="container py-3">
                 <h2 id="dayThree">Wednesday</h2>
                 <h2 id="dayThreeDate">March 7th</h2>
-                <img id="dayThreeImg" src="./imgs/sunny.png" alt="Weather Image">
+                <img id="dayThreeImg" src="" alt="Weather Image">
                 <p id="dayThreeTemp">74</p>
               </div>
             </div>            
@@ -134,7 +134,7 @@
               <div class="container py-3">
                 <h2 id="dayFour">Thursday</h2>
                 <h2 id="dayFourDate">March 8th</h2>
-                <img id="dayFourImg" src="./imgs/sunny.png" alt="Weather Image">
+                <img id="dayFourImg" src="" alt="Weather Image">
                 <p id="dayFourTemp">74</p>
               </div>
             </div>            
@@ -144,7 +144,7 @@
               <div class="container py-3">
                 <h2 id="dayFive">Friday</h2>
                 <h2 id="dayFiveDate">March 9th</h2>
-                <img id="dayFiveImg" src="./imgs/sunny.png" alt="Weather Image">
+                <img id="dayFiveImg" src="" alt="Weather Image">
                 <p id="dayFiveTemp">74</p>
               </div>
             </div>           
@@ -153,12 +153,28 @@
       </div>
 
       <div class="Favorite">
-        <button class="favoriteBtn" id="favoriteBtn">
+        <button class="favoriteBtn" id="favoriteBtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
           <p>Favorite Places</p>
           <img class="favoriteImg" src="./imgs/favorite.png" >
         </button>
       </div>
 
+
+      <nav class="navbar">
+        <div class="container-fluid">
+          <div class="offcanvas offcanvas-start offcanvas-bg" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+              <h2 class="offcanvas-title" id="offcanvasNavbarLabel" style="font-size: 20px;">YOUR FAVORITE CITIES</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" id="favoriteCitiesList">
+
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
     </div>
 
 

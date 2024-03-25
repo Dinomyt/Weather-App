@@ -1,33 +1,37 @@
-
-
+// Variables
 const apiKey = 'f6c3711024d25bbf7faf01870c0cf091';
 let temperatureUnits = ["standard", "imperial", "metric"];
-let city = 'Stockton'; // Replace with the city you want to get weather information for
+let city = 'Stockton'; 
 let numberOfDays = 7;
 let choice = 1;
 let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}`;
 let sevenDayApi = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=${numberOfDays}&appid=${apiKey}&units=${temperatureUnits[choice]}`;
+//Not used since we're not doing 5 hour forecast
 let next5HoursForecast = `https://pro.openweathermap.org/data/2.5/forecast/hourly?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}&cnt=5`;
+const cityInput = document.getElementById("cityInput");
 
-let currentCityDisplay = document.getElementById("currentCityDisplay");
-let currentTempDisplay = document.getElementById("currentTempDisplay");
-let currentWeatherDisplay = document.getElementById("currentWeatherDisplay");
-let todaysDate = document.getElementById("todaysDate");
-let currentDay = document.getElementById("currentDay");
-let maxTemp = document.getElementById("maxTemp");
-let minTemp = document.getElementById("minTemp");
-let feelsLikeTemp = document.getElementById("feelsLikeTemp");
-let humidity = document.getElementById("humidity");
-// Function to make API request and display weather information
+
+
+
+
+// ------------------------------------------------------------------------------------Start of------------------------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------------API Functions---------------------------------------------------------------------------------------- //
 async function getWeather() {
   try {
+    let currentCityDisplay = document.getElementById("currentCityDisplay");
+    let currentTempDisplay = document.getElementById("currentTempDisplay");
+    let currentWeatherDisplay = document.getElementById("currentWeatherDisplay");
+    let todaysDate = document.getElementById("todaysDate");
+    let currentDay = document.getElementById("currentDay");
+    let maxTemp = document.getElementById("maxTemp");
+    let minTemp = document.getElementById("minTemp");
+    let feelsLikeTemp = document.getElementById("feelsLikeTemp");
+    let humidity = document.getElementById("humidity");
     const response = await fetch(apiUrl);
     const data = await response.json();
-    console.log(data);
-    // Display weather information
-    const date = new Date(data.dt * 1000);
-    const formattedDate = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric' }).format(date);
-    const dayOfWeek = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
+    // console.log(data);
+    const formattedDate = getFormattedDate(data.dt);
+    const dayOfWeek = getDayOfWeek(data.dt);
     currentCityDisplay.innerHTML = data.name;
     currentTempDisplay.innerHTML = `${Math.round(data.main.temp)}&#8457;`;
     currentWeatherDisplay.innerHTML = data.weather[0].description;
@@ -37,6 +41,7 @@ async function getWeather() {
     minTemp.innerHTML = `${Math.round(data.main.temp_min)}&#8457;`;
     feelsLikeTemp.innerHTML = `${Math.round(data.main.feels_like)}&#8457;`;
     humidity.innerHTML = `${data.main.humidity}%`
+    updateWeatherImage(data.weather[0].icon ,'currentWeatherImg')
   } catch (error) {
     console.error('Error fetching weather data:', error);
   }
@@ -51,33 +56,52 @@ async function getForecast() {
     document.getElementById('dayOne').textContent = getDayOfWeek(data.list[1].dt);
     document.getElementById('dayOneDate').textContent = getFormattedDate(data.list[1].dt);
     document.getElementById('dayOneTemp').innerHTML = `${Math.round(data.list[1].temp.day)} &#8457;`;
-    // updateWeatherImage('dayOneImg', data.list[1].weather[0].main);
+    updateWeatherImage(data.list[1].weather[0].icon, 'dayOneImg');
 
     document.getElementById('dayTwo').textContent = getDayOfWeek(data.list[2].dt);
     document.getElementById('dayTwoDate').textContent = getFormattedDate(data.list[2].dt);
     document.getElementById('dayTwoTemp').innerHTML = `${Math.round(data.list[2].temp.day)} &#8457;`;
-    // updateWeatherImage('dayTwoImg', data.list[2].weather[0].main);
+    updateWeatherImage(data.list[2].weather[0].icon, 'dayTwoImg');
 
     document.getElementById('dayThree').textContent = getDayOfWeek(data.list[3].dt);
     document.getElementById('dayThreeDate').textContent = getFormattedDate(data.list[3].dt);
     document.getElementById('dayThreeTemp').innerHTML = `${Math.round(data.list[3].temp.day)} &#8457;`;
-    // updateWeatherImage('dayThreeImg', data.list[3].weather[0].main);
+    updateWeatherImage(data.list[3].weather[0].icon, 'dayThreeImg');
 
     document.getElementById('dayFour').textContent = getDayOfWeek(data.list[4].dt);
     document.getElementById('dayFourDate').textContent = getFormattedDate(data.list[4].dt);
     document.getElementById('dayFourTemp').innerHTML = `${Math.round(data.list[4].temp.day)} &#8457;`;
-    // updateWeatherImage('dayFourImg', data.list[4].weather[0].main);
+    updateWeatherImage(data.list[4].weather[0].icon, 'dayFourImg');
 
     document.getElementById('dayFive').textContent = getDayOfWeek(data.list[5].dt);
     document.getElementById('dayFiveDate').textContent = getFormattedDate(data.list[5].dt);
     document.getElementById('dayFiveTemp').innerHTML = `${Math.round(data.list[5].temp.day)} &#8457;`;
-    // updateWeatherImage('dayFiveImg', data.list[5].weather[0].main);
+    updateWeatherImage(data.list[5].weather[0].icon, 'dayFiveImg');
 
   } catch (error) {
     console.error('Error fetching forecast data:', error);
   }
 }
+// -------------------------------------------------------------------------------------End of-------------------------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------------API Functions---------------------------------------------------------------------------------------- //
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ------------------------------------------------------------------------------------Start of------------------------------------------------------------------------------------------- //
+// --------------------------------------------------------------------------------Weather Functions-------------------------------------------------------------------------------------- //
 
 function getDayOfWeek(timestamp) {
   const date = new Date(timestamp * 1000);
@@ -89,17 +113,18 @@ function getFormattedDate(timestamp) {
   return new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric' }).format(date);
 }
 
+function updateWeatherImage(iconCode, imageElementId) {
+  const weatherImageElement = document.getElementById(imageElementId);
+  const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
+  const altText = `Weather icon for ${iconCode}`;
 
+  weatherImageElement.classList.add('weather-icon')
+  weatherImageElement.src = iconUrl;
+  weatherImageElement.alt = altText;
+}
 
-// Call the function to get 7-day forecast
-getForecast();
-// Call the function to get the current weather information
-getWeather();
-updateFavoriteButton(city);
-
-// Function to handle search button click
-document.getElementById("searchButton").addEventListener("click", function() {
-  const newCity = document.getElementById("cityInput").value.trim(); // Get the value from the input field and remove leading/trailing spaces
+function searchButtonHandler() {
+  const newCity = cityInput.value.trim(); // Get the value from the input field and remove leading/trailing spaces
   if (newCity !== "") {
     city = newCity; // Update the city variable
     apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}`;
@@ -107,14 +132,11 @@ document.getElementById("searchButton").addEventListener("click", function() {
     next5HoursForecast = `https://pro.openweathermap.org/data/2.5/forecast/hourly?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}&cnt=5`;
     getForecast(); // Refresh the forecast based on the new city
     getWeather(); // Refresh the weather based on the new city
-    updateFavoriteButton(city);
-    
+    updateFavoriteButton(city); // Recalls our function to check if current city is already favorited
   }
-});
+}
 
-// Function to handle saving the current city to localStorage
 function saveToLocalStorage(city) {
-  // Convert the city to lowercase
   city = city.toLowerCase();
 
   // Check if localStorage already contains cities
@@ -139,8 +161,12 @@ function saveToLocalStorage(city) {
       // Alert the user that the city has been saved
       alert(`"${city}" has been added to your favorites!`);
   } else {
-      // If the city is already present, alert the user
-      alert(`"${city}" is already in your favorites!`);
+  // If the city is already present, remove it from the array
+  savedCities = savedCities.filter(savedCity => savedCity !== city);
+  // Save the updated array back to localStorage after converting it to a JSON string
+  localStorage.setItem('savedCities', JSON.stringify(savedCities));
+  // Alert the user that the city has been removed from favorites
+  alert(`"${city}" has been removed from your favorites!`);
   }
 }
 
@@ -154,13 +180,12 @@ function updateFavoriteButton(city) {
   if (savedCities) {
       // If localStorage contains cities, parse the JSON string to convert it back to an array
       savedCities = JSON.parse(savedCities);
-      // Convert all saved cities to lowercase
       savedCities = savedCities.map(savedCity => savedCity.toLowerCase());
       if (savedCities.includes(city)) {
           // If the city is favorited, add the 'favorited' class to the button and remove 'not-favorited'
           document.querySelector('.favBtn').classList.add('favorited');
           document.querySelector('.favBtn').classList.remove('not-favorited');
-          return; // Exit the function early
+          return; 
       }
   }
 
@@ -169,25 +194,110 @@ function updateFavoriteButton(city) {
   document.querySelector('.favBtn').classList.remove('favorited');
 }
 
+function populateFavoriteCities() {
+  // Get favorited cities from local storage
+  let savedCities = localStorage.getItem('savedCities');
+  if (savedCities) {
+    // Parse JSON string to array
+    savedCities = JSON.parse(savedCities);
+
+    // Get the <ul> element
+    const favoriteCitiesList = document.getElementById('favoriteCitiesList');
+
+    // Clear any existing content
+    favoriteCitiesList.innerHTML = '';
+
+    // Loop through each favorited city and create <li> element with a button
+    savedCities.forEach(city => {
+      const li = document.createElement('li');
+      li.classList.add('nav-item');
+      li.classList.add('favoriteCities');
+      
+      const button = document.createElement('button');
+      button.classList.add('favBtn');
+      button.addEventListener('click', function() {
+        saveToLocalStorage(city);
+        updateFavoriteButton(city);
+        populateFavoriteCities();
+      });
+      
+      li.textContent = city.toUpperCase();
+      li.style.fontSize = "30px";
+
+      li.appendChild(button);
+
+      //Add an event listener to our li
+      li.addEventListener('click', function() {
+        // Update the weather information based on the clicked city
+        city = city; // Update the city variable
+        apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}`;
+        sevenDayApi = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=${numberOfDays}&appid=${apiKey}&units=${temperatureUnits[choice]}`;
+        next5HoursForecast = `https://pro.openweathermap.org/data/2.5/forecast/hourly?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}&cnt=5`;
+        getForecast(); // Refresh the forecast based on the new city
+        getWeather(); // Refresh the weather based on the new city
+        updateFavoriteButton(city); // Recalls our function to check if current city is already favorited
+      });
+
+      favoriteCitiesList.appendChild(li);
+    });
+  }
+}
+
+// -------------------------------------------------------------------------------------End of-------------------------------------------------------------------------------------------- //
+// --------------------------------------------------------------------------------Weather Functions-------------------------------------------------------------------------------------- //
+
+
+
+
+
+
+
+// ------------------------------------------------------------------------------------Start of-------------------------------------------------------------------------------------------- //
+// ---------------------------------------------------------------------------------Event Listeners---------------------------------------------------------------------------------------- //
+
+// Add event listener for the keydown event on the input field
+cityInput.addEventListener("keydown", function(event) {
+  // Check if the pressed key is the Enter key (key code 13)
+  if (event.keyCode === 13) {
+    // Prevent the default action of the Enter key (submitting the form)
+    event.preventDefault();
+    
+    // Call the function to handle the search button click
+    searchButtonHandler();
+  }
+});
+
+
+document.getElementById("searchButton").addEventListener("click", function() {
+  const newCity = document.getElementById("cityInput").value.trim(); // Get the value from the input field and remove leading/trailing spaces
+  if (newCity !== "") {
+    city = newCity; // Update the city variable
+    apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}`;
+    sevenDayApi = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=${numberOfDays}&appid=${apiKey}&units=${temperatureUnits[choice]}`;
+    next5HoursForecast = `https://pro.openweathermap.org/data/2.5/forecast/hourly?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}&cnt=5`;
+    getForecast(); // Refresh the forecast based on the new city
+    getWeather(); // Refresh the weather based on the new city
+    updateFavoriteButton(city); // Recalls our function to check if current city is already favorited
+    
+  }
+});
+
+
 // Add event listener to the favorite button
 document.querySelector('.favBtn').addEventListener('click', function() {
   saveToLocalStorage(city);
   updateFavoriteButton(city);
+  populateFavoriteCities();
 });
 
 
-// function updateWeatherImage(weatherCondition) {
-//   const weatherImageElement = document.getElementById('weatherImage');
-  
-//   // Set the appropriate image source based on the weather condition
-//   if (weatherCondition === 'sunny') {
-//     weatherImageElement.src = 'sunny.jpg'; // Replace 'sunny.jpg' with your sunny image path
-//     weatherImageElement.alt = 'Sunny';
-//   } else if (weatherCondition === 'rainy') {
-//     weatherImageElement.src = 'rainy.jpg'; // Replace 'rainy.jpg' with your rainy image path
-//     weatherImageElement.alt = 'Rainy';
-//   } else {
-//     weatherImageElement.src = ''; // Clear the image source if the weather condition is unknown or not provided
-//     weatherImageElement.alt = 'Unknown';
-//   }
-// }
+
+
+// -------------------------------------------------------------------------------------End of--------------------------------------------------------------------------------------------- //
+// ---------------------------------------------------------------------------------Event Listeners---------------------------------------------------------------------------------------- //
+
+
+populateFavoriteCities();
+getForecast();
+getWeather();
+updateFavoriteButton(city);
