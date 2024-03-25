@@ -3,12 +3,21 @@
 const apiKey = 'f6c3711024d25bbf7faf01870c0cf091';
 let temperatureUnits = ["standard", "imperial", "metric"];
 let city = 'Stockton'; // Replace with the city you want to get weather information for
-let numberOfDays = 7;
+let numberOfDays = 5;
 let choice = 1;
-const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}`;
-const sevenDayApi = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=${numberOfDays}&appid=${apiKey}&units=${temperatureUnits[choice]}`;
-const next5HoursForecast = `https://pro.openweathermap.org/data/2.5/forecast/hourly?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}&cnt=5`;
-    
+let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}`;
+let sevenDayApi = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=${numberOfDays}&appid=${apiKey}&units=${temperatureUnits[choice]}`;
+let next5HoursForecast = `https://pro.openweathermap.org/data/2.5/forecast/hourly?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}&cnt=5`;
+
+let currentCityDisplay = document.getElementById("currentCityDisplay");
+let currentTempDisplay = document.getElementById("currentTempDisplay");
+let currentWeatherDisplay = document.getElementById("currentWeatherDisplay");
+let todaysDate = document.getElementById("todaysDate");
+let currentDay = document.getElementById("currentDay");
+let maxTemp = document.getElementById("maxTemp");
+let minTemp = document.getElementById("minTemp");
+let feelsLikeTemp = document.getElementById("feelsLikeTemp");
+let humidity = document.getElementById("humidity");
 // Function to make API request and display weather information
 async function getWeather() {
   try {
@@ -16,12 +25,18 @@ async function getWeather() {
     const data = await response.json();
     console.log(data);
     // Display weather information
-    const weatherDataElement = document.getElementById('weatherData');
-    weatherDataElement.innerHTML = `
-      <p>City: ${data.name}</p>
-      <p>Temperature: ${data.main.temp} &#8451;</p>
-      <p>Weather: ${data.weather[0].description}</p>
-    `;
+    const date = new Date(data.dt * 1000);
+    const formattedDate = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric' }).format(date);
+    const dayOfWeek = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
+    currentCityDisplay.innerHTML = data.name;
+    currentTempDisplay.innerHTML = `${data.main.temp}&#8457;`;
+    currentWeatherDisplay.innerHTML = data.weather[0].description;
+    todaysDate.innerHTML = formattedDate;
+    currentDay.innerHTML = dayOfWeek;
+    maxTemp.innerHTML = `${data.main.temp_max}&#8457`;
+    minTemp.innerHTML = `${data.main.temp_min}&#8457;`;
+    feelsLikeTemp.innerHTML = `${data.main.feels_like}&#8457;`;
+    humidity.innerHTML = `${data.main.humidity}%`
   } catch (error) {
     console.error('Error fetching weather data:', error);
   }
@@ -32,78 +47,84 @@ async function getForecast() {
     const response = await fetch(sevenDayApi);
     const data = await response.json();
 
-    // Display 7-day forecast
-    const forecastDataElement = document.getElementById('forecastData');
-    forecastDataElement.innerHTML = '';
+    // Display 5-day forecast
+    document.getElementById('dayOne').textContent = getDayOfWeek(data.list[0].dt);
+    document.getElementById('dayOneDate').textContent = getFormattedDate(data.list[0].dt);
+    document.getElementById('dayOneTemp').innerHTML = `${data.list[0].temp.day} &#8457;`;
+    // updateWeatherImage('dayOneImg', data.list[0].weather[0].main);
 
-    data.list.forEach(day => {
-      const date = new Date(day.dt * 1000);
-      const dayOfWeek = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
+    document.getElementById('dayTwo').textContent = getDayOfWeek(data.list[1].dt);
+    document.getElementById('dayTwoDate').textContent = getFormattedDate(data.list[1].dt);
+    document.getElementById('dayTwoTemp').innerHTML = `${data.list[1].temp.day} &#8457;`;
+    // updateWeatherImage('dayTwoImg', data.list[1].weather[0].main);
 
-      forecastDataElement.innerHTML += `
-        <div>
-          <p>City: ${city} </p>
-          <p>${dayOfWeek}</p>
-          <p>Temperature: ${day.temp.day} &#8451;</p>
-          <p>Weather: ${day.weather[0].description}</p>
-        </div>
-      `;
-    });
-    console.log("Checking");
-    console.log(data);
+    document.getElementById('dayThree').textContent = getDayOfWeek(data.list[2].dt);
+    document.getElementById('dayThreeDate').textContent = getFormattedDate(data.list[2].dt);
+    document.getElementById('dayThreeTemp').innerHTML = `${data.list[2].temp.day} &#8457;`;
+    // updateWeatherImage('dayThreeImg', data.list[2].weather[0].main);
+
+    document.getElementById('dayFour').textContent = getDayOfWeek(data.list[3].dt);
+    document.getElementById('dayFourDate').textContent = getFormattedDate(data.list[3].dt);
+    document.getElementById('dayFourTemp').innerHTML = `${data.list[3].temp.day} &#8457;`;
+    // updateWeatherImage('dayFourImg', data.list[3].weather[0].main);
+
+    document.getElementById('dayFive').textContent = getDayOfWeek(data.list[4].dt);
+    document.getElementById('dayFiveDate').textContent = getFormattedDate(data.list[4].dt);
+    document.getElementById('dayFiveTemp').innerHTML = `${data.list[4].temp.day} &#8457;`;
+    // updateWeatherImage('dayFiveImg', data.list[4].weather[0].main);
+
   } catch (error) {
     console.error('Error fetching forecast data:', error);
   }
 }
 
-async function getNext5HoursForecast() {
-  try {
-    const response = await fetch(next5HoursForecast);
-    const data = await response.json();
 
-    // Display forecast for the next 5 hours
-    const hourlyData = document.getElementById('hourlyData');
-    hourlyData.innerHTML = '';
-    console.log(data);
-
-    for (let i = 0; i < 5; i++) {
-      const timestamp = data.hourly[i].dt * 1000;
-      const date = new Date(timestamp);
-      const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-      hourlyData.innerHTML += `
-        <div>
-          <p>Time: ${time}</p>
-          <p>Temperature: ${data.hourly[i].temp} °C</p>
-          <p>Weather: ${data.hourly[i].weather[0].description}</p>
-        </div>
-      `;
-    }
-  } catch (error) {
-    console.error('Error fetching forecast data:', error);
-  }
+function getDayOfWeek(timestamp) {
+  const date = new Date(timestamp * 1000);
+  return new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
 }
+
+function getFormattedDate(timestamp) {
+  const date = new Date(timestamp * 1000);
+  return new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric' }).format(date);
+}
+
+
 
 // Call the function to get 7-day forecast
 getForecast();
-// console.log("check");
-// Call the function to get weather information
+// Call the function to get the current weather information
 getWeather();
 
-// getNext5HoursForecast();
 
-function updateWeatherImage(weatherCondition) {
-  const weatherImageElement = document.getElementById('weatherImage');
-  
-  // Set the appropriate image source based on the weather condition
-  if (weatherCondition === 'sunny') {
-    weatherImageElement.src = 'sunny.jpg'; // Replace 'sunny.jpg' with your sunny image path
-    weatherImageElement.alt = 'Sunny';
-  } else if (weatherCondition === 'rainy') {
-    weatherImageElement.src = 'rainy.jpg'; // Replace 'rainy.jpg' with your rainy image path
-    weatherImageElement.alt = 'Rainy';
-  } else {
-    weatherImageElement.src = ''; // Clear the image source if the weather condition is unknown or not provided
-    weatherImageElement.alt = 'Unknown';
+
+// Function to handle search button click
+document.getElementById("searchButton").addEventListener("click", function() {
+  const newCity = document.getElementById("cityInput").value.trim(); // Get the value from the input field and remove leading/trailing spaces
+  if (newCity !== "") {
+    city = newCity; // Update the city variable
+    apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}`;
+    sevenDayApi = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=${numberOfDays}&appid=${apiKey}&units=${temperatureUnits[choice]}`;
+    next5HoursForecast = `https://pro.openweathermap.org/data/2.5/forecast/hourly?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}&cnt=5`;
+    getForecast(); // Refresh the forecast based on the new city
+    getWeather(); // Refresh the weather based on the new city
+    
   }
-}
+});
+
+
+// function updateWeatherImage(weatherCondition) {
+//   const weatherImageElement = document.getElementById('weatherImage');
+  
+//   // Set the appropriate image source based on the weather condition
+//   if (weatherCondition === 'sunny') {
+//     weatherImageElement.src = 'sunny.jpg'; // Replace 'sunny.jpg' with your sunny image path
+//     weatherImageElement.alt = 'Sunny';
+//   } else if (weatherCondition === 'rainy') {
+//     weatherImageElement.src = 'rainy.jpg'; // Replace 'rainy.jpg' with your rainy image path
+//     weatherImageElement.alt = 'Rainy';
+//   } else {
+//     weatherImageElement.src = ''; // Clear the image source if the weather condition is unknown or not provided
+//     weatherImageElement.alt = 'Unknown';
+//   }
+// }
