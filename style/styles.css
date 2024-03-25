@@ -31,6 +31,7 @@
 h2 {
     font-family: 'Sorts Mill Goudy';
     font-weight: 400;
+    margin: 0px;
 }
 
 p, li, .search-input {
@@ -120,6 +121,7 @@ body {
     align-items: center;
     margin-top: 5px;
     margin-bottom: 5px;
+    text-align: center;
 }
 
 .currentTempDiv{
