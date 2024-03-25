@@ -3,7 +3,7 @@
 const apiKey = 'f6c3711024d25bbf7faf01870c0cf091';
 let temperatureUnits = ["standard", "imperial", "metric"];
 let city = 'Stockton'; // Replace with the city you want to get weather information for
-let numberOfDays = 5;
+let numberOfDays = 7;
 let choice = 1;
 let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${temperatureUnits[choice]}`;
 let sevenDayApi = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=${numberOfDays}&appid=${apiKey}&units=${temperatureUnits[choice]}`;
@@ -48,30 +48,30 @@ async function getForecast() {
     const data = await response.json();
 
     // Display 5-day forecast
-    document.getElementById('dayOne').textContent = getDayOfWeek(data.list[0].dt);
-    document.getElementById('dayOneDate').textContent = getFormattedDate(data.list[0].dt);
-    document.getElementById('dayOneTemp').innerHTML = `${data.list[0].temp.day} &#8457;`;
-    // updateWeatherImage('dayOneImg', data.list[0].weather[0].main);
+    document.getElementById('dayOne').textContent = getDayOfWeek(data.list[1].dt);
+    document.getElementById('dayOneDate').textContent = getFormattedDate(data.list[1].dt);
+    document.getElementById('dayOneTemp').innerHTML = `${data.list[1].temp.day} &#8457;`;
+    // updateWeatherImage('dayOneImg', data.list[1].weather[0].main);
 
-    document.getElementById('dayTwo').textContent = getDayOfWeek(data.list[1].dt);
-    document.getElementById('dayTwoDate').textContent = getFormattedDate(data.list[1].dt);
-    document.getElementById('dayTwoTemp').innerHTML = `${data.list[1].temp.day} &#8457;`;
-    // updateWeatherImage('dayTwoImg', data.list[1].weather[0].main);
+    document.getElementById('dayTwo').textContent = getDayOfWeek(data.list[2].dt);
+    document.getElementById('dayTwoDate').textContent = getFormattedDate(data.list[2].dt);
+    document.getElementById('dayTwoTemp').innerHTML = `${data.list[2].temp.day} &#8457;`;
+    // updateWeatherImage('dayTwoImg', data.list[2].weather[0].main);
 
-    document.getElementById('dayThree').textContent = getDayOfWeek(data.list[2].dt);
-    document.getElementById('dayThreeDate').textContent = getFormattedDate(data.list[2].dt);
-    document.getElementById('dayThreeTemp').innerHTML = `${data.list[2].temp.day} &#8457;`;
-    // updateWeatherImage('dayThreeImg', data.list[2].weather[0].main);
+    document.getElementById('dayThree').textContent = getDayOfWeek(data.list[3].dt);
+    document.getElementById('dayThreeDate').textContent = getFormattedDate(data.list[3].dt);
+    document.getElementById('dayThreeTemp').innerHTML = `${data.list[3].temp.day} &#8457;`;
+    // updateWeatherImage('dayThreeImg', data.list[3].weather[0].main);
 
-    document.getElementById('dayFour').textContent = getDayOfWeek(data.list[3].dt);
-    document.getElementById('dayFourDate').textContent = getFormattedDate(data.list[3].dt);
-    document.getElementById('dayFourTemp').innerHTML = `${data.list[3].temp.day} &#8457;`;
-    // updateWeatherImage('dayFourImg', data.list[3].weather[0].main);
+    document.getElementById('dayFour').textContent = getDayOfWeek(data.list[4].dt);
+    document.getElementById('dayFourDate').textContent = getFormattedDate(data.list[4].dt);
+    document.getElementById('dayFourTemp').innerHTML = `${data.list[4].temp.day} &#8457;`;
+    // updateWeatherImage('dayFourImg', data.list[4].weather[0].main);
 
-    document.getElementById('dayFive').textContent = getDayOfWeek(data.list[4].dt);
-    document.getElementById('dayFiveDate').textContent = getFormattedDate(data.list[4].dt);
-    document.getElementById('dayFiveTemp').innerHTML = `${data.list[4].temp.day} &#8457;`;
-    // updateWeatherImage('dayFiveImg', data.list[4].weather[0].main);
+    document.getElementById('dayFive').textContent = getDayOfWeek(data.list[5].dt);
+    document.getElementById('dayFiveDate').textContent = getFormattedDate(data.list[5].dt);
+    document.getElementById('dayFiveTemp').innerHTML = `${data.list[5].temp.day} &#8457;`;
+    // updateWeatherImage('dayFiveImg', data.list[5].weather[0].main);
 
   } catch (error) {
     console.error('Error fetching forecast data:', error);
