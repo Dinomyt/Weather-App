@@ -1,20 +1,6 @@
-# Weather App
-
-Neng Lao
----------------------
--  Followed the assigned figma design and 
-----------------------
-
-  
-Peer Reviewers:  
----------------------
-I see that your pages seem to be native 1080 p or also able to be 1440px wide so the pages fit well.  As we go smaller each page is responsive for almost everything.  For the index page I noticed that the p tags near the bottom bleeds into other containers as the screen gets smaller.  This seemed to be the only issue on the index page and no issues for any other page.  This was a great redo of the website you made.  I like the color palette and its simplicity, it makes everything feel more cohesive.
-
----------------------
-
-# Weather App
+# Weather App - Neng Lao
 #Overview
-This Weather App is a simple web application that allows users to check the current weather and forecast for their favorite cities. It utilizes the OpenWeather API to fetch weather data and provides a user-friendly interface for displaying weather information.
+This Weather App is a simple web application that allows users to check the current weather and forecast for their favorite cities. It utilizes the OpenWeather API to fetch weather data and provides a user-friendly interface for displaying weather information. The original figma design was created by Johnny Pham and the goal of the project is to be able to bring other people's design to foster collaboration and innovation through development.
 
 #Features
 *Front-end Design: The application has a clean and intuitive user interface designed with HTML, CSS, and Bootstrap framework.
@@ -36,6 +22,14 @@ To use the Weather App:
 *CSS (Bootstrap)
 *JavaScript
 *OpenWeather API
+
+
+
+#Peer Reviewers:  
+---------------------
+
+
+---------------------
 
 # Prototype:  
 
