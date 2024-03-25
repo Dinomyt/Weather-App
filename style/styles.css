@@ -1,0 +1,168 @@
+.main {
+    background-image: url("../imgs/mainBG.png");
+    background-size: cover;
+    height: 100vh; 
+    width: 100%;
+}
+
+/* Style for the search bar container */
+.search-container {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 20px; /* Adjust the top position as needed */
+    right: 20px; /* Adjust the right position as needed */
+}
+  
+/* Style for the search input */
+.search-input {
+width: 400px; /* Adjust the width as needed */
+height: 40px; /* Set the same height as the button */
+padding: 8px;
+border: 1px solid #000000;
+border-radius: 5px 0 0 5px;
+outline: none;
+}
+
+/* Style for the search button */
+.search-button {
+background-color: #FFF9C8; /* Change to your desired button color */
+color: #fff;
+border: 1px solid #000000;
+border-radius: 0 5px 5px 0;
+padding: 8px 16px;
+cursor: pointer;
+background-image: url('../imgs/MagnifyingGlass.png'); /* Replace 'search-icon.png' with your image path */
+background-repeat: no-repeat;
+background-position: center;
+background-size: 24px 24px; /* Adjust the size of the image */
+height: 40px; /* Set the same height as the input */
+}
+
+/* Hide the default button text */
+.search-button span {
+display: none;
+}
+
+.firstRow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.currentCity {
+    display: flex;
+    justify-content: center;
+    padding-top: 60px;
+    margin-bottom: 20px;
+}
+
+.currentWeather {
+    width: 600px;
+    height: 300px;
+    background-color: rgba(182, 237, 255, 0.9);
+    border-radius: 10px;
+}
+
+.temperatureDisplay {
+    width: 600px;
+    height: 300px;
+    background-color: rgba(182, 237, 255, 0.9); 
+    border-radius: 10px;
+}
+
+.forecastDisplay {
+    width: 295px;
+    height: 305px;
+    background-color: rgba(182, 237, 255, 0.9); 
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+.colStyle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.currentTempDiv{
+    text-align: center;
+    
+}
+
+#todaysDate {
+    font-size: 35px;
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
+}
+
+#currentTempDisplay {
+    font-size: 125px;
+}
+
+#currentWeatherDisplay{
+    font-size: 35px;
+}
+
+.currentTempImgDisplay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px; /* Set the width of the container */
+    height: 150px; /* Set the height of the container */
+}
+
+.currentTempImgDisplay img {
+    width: 100%; /* Ensure the image fills the container horizontally */
+    height: 100%; /* Ensure the image fills the container vertically */
+    object-fit: cover; /* Maintain aspect ratio and cover the entire container */
+  }
+
+.favBtn{
+    cursor: pointer;
+    background-image: url('../imgs/heart.png'); /* Replace 'search-icon.png' with your image path */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent; /* Set background color to transparent */
+    border: none;
+    background-size: 50px 50px; /* Adjust the size of the image */
+    height: 50px; /* Set the same height as the input */
+    width: 50px;
+    
+}
+
+.temperatureDisplay{
+    text-align: center;
+}
+
+.forecastDisplay p {
+    font-size: 48px;
+}
+
+
+.Favorite {
+    display: flex;
+    justify-content: center;
+}
+.favoriteBtn {
+
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    margin-top: 25px;
+    width: 600px;
+    height: 60px;
+    border-radius: 10px;
+    font-size: 35px
+}
+
+.favoriteBtn p {
+    margin-left: 10px;
+}
+
+.favoriteImg {
+    max-height: 100%; 
+    max-width: auto; 
+}
